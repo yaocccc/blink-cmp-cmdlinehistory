@@ -39,6 +39,9 @@ return {
                         name = 'history',
                         module = 'cmdlinehistory',
                         score_offset = 999,
+                        opts = {
+                          fiexedkeyword = true, -- default
+                        }
                     },
                 },
             },
@@ -93,6 +96,9 @@ return {
                         name = 'history',
                         module = 'cmdlinehistory',
                         score_offset = 999,
+                        opts = {
+                          fiexedkeyword = true, -- 默认，true时会在第一项插入你输入的关键字，false时关闭
+                        }
                     },
                 },
             },

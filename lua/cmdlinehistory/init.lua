@@ -3,6 +3,8 @@ local source = {}
 source.new = function(opts)
     local self = setmetatable({}, { __index = source })
     self.opts = opts
+    if self.opts == nil then self.opts = {} end
+    if self.opts.fiexedkeyword == nil then self.opts.fiexedkeyword = true end
     return self
 end
 
@@ -39,8 +41,10 @@ source.get_completions = function(self, ctx, callback)
         return callback(get_history(cmdtype))
     end
 
-    local keyword = ctx:get_keyword()
-    if keyword ~= '' then return callback(get_fixedkeyword(keyword)) end
+    if self.opts.fiexedkeyword then
+        local keyword = ctx:get_keyword()
+        if keyword ~= '' then return callback(get_fixedkeyword(keyword)) end
+    end
 
     callback({ items = {}, is_incomplete_backward = true, is_incomplete_forward = true })
     return function() end
