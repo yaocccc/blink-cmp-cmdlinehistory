@@ -31,16 +31,18 @@ local get_fixedkeyword = function(keyword)
 end
 
 source.get_completions = function(self, ctx, callback)
-    local keyword = ctx:get_keyword()
+    local cmdline = vim.fn.getcmdline()
 
-    if keyword == '' then
+    if cmdline == '' then
         local cmdtype = vim.fn.getcmdtype()
         if cmdtype == '?' then cmdtype = '/' end
         return callback(get_history(cmdtype))
     end
 
-    callback(get_fixedkeyword(keyword))
+    local keyword = ctx:get_keyword()
+    if keyword ~= '' then return callback(get_fixedkeyword(keyword)) end
 
+    callback({ items = {}, is_incomplete_backward = true, is_incomplete_forward = true })
     return function() end
 end
 
